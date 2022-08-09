@@ -1,0 +1,78 @@
+
+<!doctype html5>
+
+
+<html lang="pt">
+    <head>
+        {% block head %}
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+       
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% block styles %}
+        <link rel='stylesheet' href='{{ url_for("static", filename="css/index.css") }}'/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+            <!-- Bootstrap CSS -->
+            {{ bootstrap.load_css() }}
+        {% endblock %}
+
+        {% block title %}<title> CaSertão </title>{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        <!-- Your page content -->
+        {% block content %}
+        <nav class="navbar navbar-expand-lg navbar-light text-light">
+            <div class="container-fluid">
+              
+            </div>
+          </nav>
+        {% endblock %}
+
+        {% block page %}
+
+        {% endblock %}
+
+        {% block footer %}
+            <br><br><br><br><br>
+            <br><br><br><br><br>
+            <br><br><br><br><br>
+            <!-- Footer -->
+            <footer class="page-footer font-small blue pt-4">
+           
+            </footer> 
+        {% endblock %}
+
+  
+
+        {% block scripts %}
+            <!-- Optional JavaScript -->
+            {{ bootstrap.load_js() }}
+
+            <script src='{{ url_for("static", filename="js/jquery.min.js") }}'></script>
+            <script src='{{url_for("static",filename="js/socket.js")}}' integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+            <script type="text/javascript" charset="utf-8">
+            username=localStorage.getItem('username')
+
+                var socket = io();
+                
+                socket.on('connect', function() {
+                    socket.emit('connected', {'username':username,'text': 'I\'m connected!'});
+                $('#server_status').html(`<i title='Server Online' class="material-icons green">brightness_1</i>`)
+                });
+                socket.on('disconnect',()=>{
+                    $('#server_status').html(`<i title='Server Offline' class="material-icons red">brightness_1</i>`)
+                });
+
+                window.onbeforeunload = function () {
+                    socket.emit('disconnected', {'username':username,'text':`I'm exit`});
+                }
+            </script>
+        {% endblock %}
+
+    </body>
+</html>
