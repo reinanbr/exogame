@@ -1,5 +1,8 @@
 body{
     background-color: white;
+    background-image: url('https://3.bp.blogspot.com/-p0BK25tz_NQ/XD930R755FI/AAAAAAAAAuM/R3KTBmnz3uUKukfCXlEadpjkJ7COfbfZQCKgBGAs/w0/galaxy-stars-space-24-4k.jpg');
+    background-repeat: no-repeat;
+    background-size: 200% 200%;
   }
     @font-face {
       font-family: Charter;
@@ -68,6 +71,24 @@ body{
     .bold{
       font-weight: bold;
     }
+
+    .box {
+      min-width: 200px;
+      height: 100px;
+      background-color: red;
+      margin: 1rem;
+    }
+    .scrolling-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+    }
+    .app {
+      /* display: flex;
+      flex-wrap: nowrap; */
+      overflow-x: scroll;
+    }
+    
 
     p{
       font-family: 'Roboto';
