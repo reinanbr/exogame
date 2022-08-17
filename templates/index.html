@@ -14,7 +14,20 @@
        
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+        <meta name="description" content="Jogue o seu jogo de exoplanetas">
+        <meta property="og:description" content="Jogue o seu jogo de exoplanetas 1">
+        <meta name="twitter:description" content="Jogue o seu jogo de exoplanetas 2">
+        
+        <meta property="og:image" content="{{url_for('static',filename='favicon.ico')}}">
+        <meta name="twitter:image" content="{{url_for('static',filename='favicon.ico')}}">
+
+
+        <meta property="og:title" content="ExoGame">
+        <meta name="twitter:title" content="Exogame">
+        
         {% block styles %}
+    
         <link rel='stylesheet' href='{{ url_for("static", filename="css/index.css") }}'/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
             <!-- Bootstrap CSS -->
