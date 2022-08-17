@@ -19,7 +19,8 @@ app = Flask(__name__,static_url_path='/static')
 '''the bootstrap init'''
 bootstrap = Bootstrap5(app)
 
-
+#app.add_url_rule('/favicon.ico',
+#                 redirect_to=url_for('static', filename='favicon.ico'))
 
 '''init page'''
 @app.route('/')
@@ -35,6 +36,18 @@ def index():
 '''the scoketio init'''
 socketio = SocketIO(app,async_mode=None)
 
+
+
+# connected
+@socketio.on('connected')
+def connect(data):
+    print(data)
+
+
+#disconnected
+@socketio.on('disconnect')
+def disconnected(data_):
+    print(data_)
 
 
 

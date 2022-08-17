@@ -7,6 +7,7 @@
         {% block head %}
         <!-- Required meta tags -->
         <meta charset="utf-8">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -104,8 +105,7 @@
             {{ bootstrap.load_js() }}
 
             <script src='{{ url_for("static", filename="js/jquery.min.js") }}'></script>
-            <script src='{{url_for("static",filename="js/socket.js")}}' integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-            <script type="text/javascript" charset="utf-8">
+            <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>v12         <!-- <script type="text/javascript" charset="utf-8">
             username=localStorage.getItem('username')
 
                 var socket = io();
@@ -121,7 +121,7 @@
                 window.onbeforeunload = function () {
                     socket.emit('disconnected', {'username':username,'text':`I'm exit`});
                 }
-            </script>
+            </script> -->
         {% endblock %}
 
     </body>
