@@ -5,7 +5,7 @@ from json import dump
 from flask_bootstrap import Bootstrap5
 from urllib.parse import quote
 import datetime as dt
-
+import os
 
 
 
@@ -52,5 +52,8 @@ def disconnected(data_):
 
 
 
+  
+
 if __name__ == '__main__':
-    socketio.run(app,debug=True)
+	port = int(os.environ.get("PORT", 5000))
+	socketio.run(app=app,host='0.0.0.0', port=port)
