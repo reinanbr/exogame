@@ -15,6 +15,7 @@ flask-sqlalchemy = "*"
 #flask-mongoengine = "*"
 flask-admin = "*"
 flask-login = "*"
+pytest-flask = "*"
 
 [dev-packages]
 
