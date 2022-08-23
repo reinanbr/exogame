@@ -5,8 +5,8 @@ body{
     background-size: 200% 200%;
   }
     @font-face {
-      font-family: Charter;
-      src: url("Outfit-VariableFont_wght.ttf");
+      font-family: Nasa;
+      src: url("nasalization.otf");
     }
 
 
@@ -115,4 +115,25 @@ body{
 
 .news_div{
   width:60%;
+}
+
+.icon_footer img{
+  height: 50px;
+}
+
+.footer_text{
+  color:grey;
+  font-family: Nasa;
+}
+#container {
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-between; /* switched from default (flex-start, see below) */
+  background-color: lightyellow;
+}
+#container > div {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed red;
 }
