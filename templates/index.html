@@ -42,7 +42,7 @@
         {% block content %}
         <nav class="navbar navbar-expand-lg navbar-light text-light">
             <div class="container-fluid">
-                <a class="navbar-brand text-light" href="#" id='home'>ExoGame</a>
+                <a class="navbar-brand text-light" href="#" id='home'><img class="logo" src='{{url_for("static",filename="img/android_ico.png")}}' size="10px"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -72,7 +72,7 @@
         {% block page %}
         <div class="app">
 
-        <div class="card" style="width:400px">
+         <div class="card" style="width:400px">
             <img class="card-img-top" src="img_avatar1.png" alt="Card image">
             <div class="card-body">
               <h4 class="card-title">John Doe</h4>
@@ -80,6 +80,7 @@
               <a href="#" class="btn btn-primary">See Profile</a>
             </div>
           </div>
+        
 <!-- 
           <div class="scrolling-wrapper">
             <div class="box"></div>
@@ -108,19 +109,23 @@
 
             <div class="row">
               <span>
-              <div class="block icon_footer" size="100px">
-                <a title="GitHub - ReinanBr" href="github.com/reinanbr"><img src='{{url_for("static",filename="img/git.png")}}'></a>
-                <span class="footer_text">ReinanBr</span>
+              <div class="block icon_footer slim git" size="100px">
+                <a title="GitHub - ReinanBr" href="https://github.com/reinanbr"><img src='{{url_for("static",filename="img/git.png")}}'></a>
+                <span class="footer_text"><br>ReinanBr</span>
               </div>
               <div class="block text-center if icon_footer" size="100px">
-                <a title="GitHub - ReinanBr" href="github.com/reinanbr"><img src='{{url_for("static",filename="img/if.png")}}'></a>
+                <a title="IFSertãoPE - campus Petrolina" href="https://ifsertao-pe.edu.br/index.php/campus/petrolina"><img src='{{url_for("static",filename="img/if.png")}}'></a>
                 <span class="footer_text"></span>
+              </div>
+              <div class="block text-center if icon_footer slim">
+                <a title="CNPq - Erivelton Façanha" href="http://lattes.cnpq.br/0796057995545047"><img src='{{url_for("static",filename="img/erivelton.gif")}}'></a>
+                <span class="footer_text">Dr. Prof. Erivelton Façanha <br>(Orientador)</span>
               </div>
               </span>
             </div>
-                <div class="footer-copyright text-center py-3">© 2022 gpftc IF-Sertão<span id='server_status'></span>
+                <div class="footer-copyright text-center py-3 footer_text">© 2022 ReinanBr<span id='server_status'></span>
                     
-                    <p>Copyright</p>
+                    <p class="footer_text">Copyright</p>
             </footer> 
         {% endblock %}
 
@@ -131,7 +136,7 @@
             {{ bootstrap.load_js() }}
 
             <script src='{{ url_for("static", filename="js/jquery.min.js") }}'></script>
-            <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>v12         <!-- <script type="text/javascript" charset="utf-8">
+            <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>     <!-- <script type="text/javascript" charset="utf-8">
             username=localStorage.getItem('username')
 
                 var socket = io();

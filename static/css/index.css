@@ -84,8 +84,11 @@ body{
       overflow-x: scroll;
     }
     .app {
+      width: 98%;
       /* display: flex;
       flex-wrap: nowrap; */
+      /* display: flex; */
+      flex-wrap: nowrap;
       overflow-x: scroll;
     }
     
@@ -152,4 +155,17 @@ body{
 
 .if{
   margin-left: 30%;
+}
+
+.slim{
+  font-size: 50%;
+  width: 15%;
+}
+
+.git{
+  margin-left: 10px
+}
+
+.logo{
+  width: 30%;
 }
