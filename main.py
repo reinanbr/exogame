@@ -6,7 +6,7 @@ from flask_bootstrap import Bootstrap5
 from urllib.parse import quote
 import datetime as dt
 import os
-
+from data import questions
 
 
 
@@ -39,12 +39,17 @@ def index():
 
 
 
-
-
 '''the scoketio init'''
 socketio = SocketIO(app,async_mode=None)
 
 
+
+
+#sending the question
+@socketio.on('get_question')
+def get_question()-> None:
+    print('sending questions')
+    emit('question',questions,json=True)
 
 # connected
 @socketio.on('connected')

@@ -1,5 +1,5 @@
 
-<!doctype html5>
+<!doctype html>
 
 
 <html lang="pt">
@@ -8,6 +8,24 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+        <!-- <link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        /> -->
+        <!-- <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        /> -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
+      
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -42,7 +60,7 @@
         {% block content %}
         <nav class="navbar navbar-expand-lg navbar-light text-light">
             <div class="container-fluid">
-                <a class="navbar-brand text-light" href="#" id='home'><img class="logo" src='{{url_for("static",filename="img/android_ico.png")}}' size="10px"></a>
+                <h2><a class="navbar-brand text-light" href="#" id='home'><img class="logo" src='{{url_for("static",filename="img/android_ico.png")}}' size="10px"></a><span class='title'></span></h2>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -50,11 +68,11 @@
                         <ul class="navbar-nav ml-auto">
                         
                         <li class="nav-item">
-                          <a class="nav-link" href="/help"><span>Ajuda</span></a>
+                          <a class="nav-link" href="/help"><span></span></a>
                         </li>
                 
                         <li class="nav-item">
-                          <a class="nav-link" href="/about"><span>sobre</span></a>
+                          <a class="nav-link" href="/about"><span></span></a>
                         <!-- </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#"><span>Catálogo de Asteroides</span></a>
@@ -70,15 +88,9 @@
         {% endblock %}
 
         {% block page %}
-        <div class="app">
+        <div id="app" class="app">
 
-         <div class="card" style="width:400px">
-            <img class="card-img-top" src="img_avatar1.png" alt="Card image">
-            <div class="card-body">
-              <h4 class="card-title">John Doe</h4>
-              <p class="card-text">Some example text.</p>
-              <a href="#" class="btn btn-primary">See Profile</a>
-            </div>
+       
           </div>
         
 <!-- 
@@ -98,20 +110,24 @@
         {% endblock %}
 
         {% block footer %}
-            <br><br><br><br><br>
-            <br><br><br><br><br>
-            <br><br><br><br><br>
+            <!-- <br><br><br><br><br>
+            <br><br><br><br><br> -->
+            <!-- <br><br><br><br><br> -->
         
         </div>
             <!-- Footer -->
         
             <footer class="page-footer font-small blue pt-4">
 
+              <button onclick="play()"><span id="'icon_player" class="material-icons md-18">volume_down</span></button>
+              
             <div class="row">
+             
               <span>
+
               <div class="block icon_footer slim git" size="100px">
                 <a title="GitHub - ReinanBr" href="https://github.com/reinanbr"><img src='{{url_for("static",filename="img/git.png")}}'></a>
-                <span class="footer_text"><br>ReinanBr</span>
+                <span class="footer_text">ReinanBr</span>
               </div>
               <div class="block text-center if icon_footer" size="100px">
                 <a title="IFSertãoPE - campus Petrolina" href="https://ifsertao-pe.edu.br/index.php/campus/petrolina"><img src='{{url_for("static",filename="img/if.png")}}'></a>
@@ -119,11 +135,12 @@
               </div>
               <div class="block text-center if icon_footer slim">
                 <a title="CNPq - Erivelton Façanha" href="http://lattes.cnpq.br/0796057995545047"><img src='{{url_for("static",filename="img/erivelton.gif")}}'></a>
-                <span class="footer_text">Dr. Prof. Erivelton Façanha <br>(Orientador)</span>
+                <span class="footer_text">Dr. Prof. Erivelton Façanha </span>
               </div>
               </span>
             </div>
-                <div class="footer-copyright text-center py-3 footer_text">© 2022 ReinanBr<span id='server_status'></span>
+            <hr>
+                <div class="footer-copyright copy text-center py-3 footer_text">© 2022 Reinan<span id='server_status'></span>
                     
                     <p class="footer_text">Copyright</p>
             </footer> 
@@ -134,9 +151,9 @@
         {% block scripts %}
             <!-- Optional JavaScript -->
             {{ bootstrap.load_js() }}
-
-            <script src='{{ url_for("static", filename="js/jquery.min.js") }}'></script>
-            <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>     <!-- <script type="text/javascript" charset="utf-8">
+            <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+            <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>  
+            <script src="{{url_for('static',filename='js/app.js')}}"   <!-- <script type="text/javascript" charset="utf-8">
             username=localStorage.getItem('username')
 
                 var socket = io();
@@ -152,7 +169,7 @@
                 window.onbeforeunload = function () {
                     socket.emit('disconnected', {'username':username,'text':`I'm exit`});
                 }
-            </script> -->
+            </script> 
         {% endblock %}
 
     </body>

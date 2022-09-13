@@ -1,16 +1,13 @@
 {"questions":[
     {
-        "question_1" :
-        {
-            "help":
-            {
-                "img_url":"https://apod.nasa.gov/apod/image/2208/CygnusWall_Bogaerts_960.jpg",
-                "image_font":"Nasa image day",
-                "context":"um texto de assunto",
-                "ABNT":"test"
-            },
-            "Title":"canoa",
-            "quest":"com quantas bananas se faz uma canoa?",
+            "img_url":"https://apod.nasa.gov/apod/image/2208/CygnusWall_Bogaerts_960.jpg",
+            "image_font":"Nasa image day",
+            "context":"um texto de assunto",
+            "ABNT":"test",
+
+            "title":"canoa",
+            "body":"com quantas bananas se faz uma canoa?",
+
             "options":
             {
                 "A":"12",
@@ -18,31 +15,25 @@
                 "C":"32243",
                 "D":"0"
             },
-            "res":"C",
             "cust":10
-        }
     },
+
     {
-        "question_2" :
+        "img_url":"https://apod.nasa.gov/apod/image/2208/CygnusWall_Bogaerts_960.jpg",
+        "image_font":"Nasa image day",
+        "context":"um texto de assunto",
+        "ABNT":"test",
+
+        "title":"canoa",
+        "body":"com quantas bananas se faz uma canoa?",
+
+        "options":
         {
-            "help":
-            {
-                "img_url":"https://apod.nasa.gov/apod/image/2208/CygnusWall_Bogaerts_960.jpg",
-                "image_font":"Nasa image day",
-                "context":"um texto de assunto",
-                "ABNT":"test"
-            },
-            "Title":"canoa",
-            "quest":"com quantas bananas se faz uma canoa?",
-            "options":
-            {
-                "A":"12",
-                "B":"44",
-                "C":"32243",
-                "D":"0"
-            },
-            "res":"C",
-            "cust":10
-        }
+            "A":"12",
+            "B":"44",
+            "C":"32243",
+            "D":"0"
+        },
+        "cust":10
     }
 ]}
