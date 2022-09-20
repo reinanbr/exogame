@@ -11,8 +11,6 @@ from data import questions
 
 
 
-
-
 now = dt.datetime.now
 app = Flask(__name__,static_url_path='/static')
 
@@ -35,6 +33,11 @@ def favicon():
 def index():
     #data.current_user = current_user
     return render_template('index.html',data={'test':'ok'})
+
+
+@app.route('/add_questions')
+def quest():
+    return render_template('questionsAdd.html')
 
 
 

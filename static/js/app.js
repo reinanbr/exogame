@@ -14,7 +14,7 @@ width = 10
 
 //function for create the card question
 function createCardQuestion(title,body,imageUrl,options){
-    return ` <div class="card"  style="width:350px;height:600px;margin-left:${width}px;margin-top:0px;margin-bottom:0px;margin-right:0px;">
+    return ` <div class="card"  style="margin-left:${width}px;margin-top:0px;margin-bottom:0px;margin-right:0px;">
     <img class="card-img-top" src=${imageUrl} alt="Card image">
     <div class="card-body">
       <h4 class="card-title">${title}</h4>

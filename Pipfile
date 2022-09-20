@@ -16,6 +16,7 @@ flask-sqlalchemy = "*"
 flask-admin = "*"
 flask-login = "*"
 pytest-flask = "*"
+firebase-admin = "*"
 
 [dev-packages]
 

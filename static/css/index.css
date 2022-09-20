@@ -1,7 +1,7 @@
 body{
     background-color: white;
-    background-image: url('https://p2.trrsf.com/image/fget/cf/696/928/images.terra.com/2022/04/15/cosmos-universo-s5054l4wbjg8.gif');
-    background-size: 100%;
+    background-image: url('https://www.nasa.gov/sites/default/files/thumbnails/image/main_image_star-forming_region_carina_nircam_final-5mb.jpg');
+    background-size: 300%;
     
     
     background-attachment: fixed;
@@ -186,4 +186,20 @@ p{
 .copy{
   font-size:60%;
   font-family: 'Roboto';
+}
+
+.card p{
+  font-size: 50%;
+}
+
+.card{
+  width:15%;
+  height:15%;
+  margin-top:0px;
+  margin-bottom:0px;
+  margin-right:0px;
+}
+
+.card-img-top{
+  width: 35%;
 }
