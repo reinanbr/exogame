@@ -45,6 +45,7 @@ def addUser(userJson):
             userExist = userInfo
     if userExist:
         userExist['acessList'].append(userJson['date'])
+        userExist['date']=userJson['date']
         userData.document(userExist['IP']).set(userExist)
     else:
         userData.document(userJson['IP']).set(userJson)
@@ -58,6 +59,7 @@ def getQuestionsData():
     for question in questionsDb:
         question = question.to_dict()
         questionsList.append(question)
+    print('questions:',questionsList)
     return questionsList
 
 # # read food

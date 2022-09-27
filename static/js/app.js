@@ -47,12 +47,13 @@ socket.emit('get_question')
 
 socket.on('question',(questionsData)=>{
     console.log(questionsData)
-    var questions = questionsData['questions'];
+    var questions = questionsData;
     console.log(questions)
     //questions.forEach(dataWorkQuestions);
 
     for(var i in questions){
         dataWorkQuestions(questions[i]);
+        console.log(questions[i])
     }
 
     

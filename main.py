@@ -9,8 +9,6 @@ import os
 from admFirebase import getQuestionsData as gqd,addUser
 #from data import questions
 
-questions = gqd()
-
 #getting the data now
 now = dt.datetime.now
 
@@ -37,9 +35,10 @@ def index():
     ip = request.remote_addr
     date = now()
     dt_string = date.strftime("%d/%m/%Y %H:%M:%S")
+    dt, hour = dt_string.split(' ')
     userJson = {"IP":ip,
                 "userAgent":userAgent,
-                "date":dt_string,
+                "date":{"date":dt,"hour":hour},
                 "acessList":[]}
     addUser(userJson)
     return render_template('index.html',data={'test':'ok'})
@@ -62,6 +61,9 @@ socketio = SocketIO(app,async_mode=None)
 @socketio.on('get_question')
 def get_question()-> None:
     print('sending questions')
+    
+    questions = gqd()
+
     emit('question',questions,json=True)
 
 # connected
