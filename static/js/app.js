@@ -18,7 +18,8 @@ function createCardQuestion(title,body,imageUrl,options){
     <img class="card-img-top" src=${imageUrl} alt="Card image">
     <div class="card-body">
       <h4 class="card-title">${title}</h4>
-      <p class="card-text">${body}</p>
+      <p class="card-text"><b>${body}</b></p>
+      <hr>
       <p><input type='radio' name='question_${title}' value='A'>${options.A} </p>
       <p><input type='radio' name='question_${title}' value='B'>${options.B} </p>
       <p><input type='radio' name='question_${title}' value='C'>${options.C} </p>
@@ -32,7 +33,7 @@ function createCardQuestion(title,body,imageUrl,options){
 function dataWorkQuestions(question){
     titleQuestion = question.title;
     bodyQuestion = question.body;
-    imageUrlQuestion = question.img_url;
+    imageUrlQuestion = question.imgUrl;
     optionsQuestion = question.options
 
     console.log(question)

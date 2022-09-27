@@ -200,6 +200,10 @@ p{
   margin-right:0px;
 }
 
+.card p{
+  font-size: 60%;
+}
+
 .card-img-top{
   width: 35%;
 }
