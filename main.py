@@ -55,7 +55,7 @@ def quest():
 
 
 '''the scoketio init'''
-socketio = SocketIO(app,async_mode=None)
+socketio = SocketIO(app)
 
 #sending the question
 @socketio.on('get_question')
@@ -71,13 +71,26 @@ def get_question()-> None:
 def connect(data):
     print(data)
 
+
+def call(res):
+    return res
+
 #disconnected
 @socketio.on('disconnect')
 def disconnected(data_):
-    print(data_)
+    print(data_) 
+    
+    
 
-
-
+#correction from question
+@socketio.on('validateResponseQuestion')
+def resGet(resUser,callback=call):
+    questions = gqd()
+    for question in questions:
+        print('question:',question)
+        if question['title'] == resUser['title']:
+            isCorrect = (question['Res']==resUser['res'])
+            emit('correctionResponse',isCorrect)
 
 
 

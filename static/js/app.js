@@ -13,8 +13,8 @@ var socket = io();
 width = 10
 
 //function for create the card question
-function createCardQuestion(title,body,imageUrl,options){
-    return ` <div class="card"  style="margin-left:${width}px;margin-top:0px;margin-bottom:0px;margin-right:0px;">
+function createCardQuestion(title,body,imageUrl,options,i){
+    return ` <div class="card" id='${title}' style="margin-left:${width}px;margin-top:0px;margin-bottom:0px;margin-right:0px;">
     <img class="card-img-top" src=${imageUrl} alt="Card image">
     <div class="card-body">
       <h4 class="card-title">${title}</h4>
@@ -24,13 +24,37 @@ function createCardQuestion(title,body,imageUrl,options){
       <p><input type='radio' name='question_${title}' value='B'>${options.B} </p>
       <p><input type='radio' name='question_${title}' value='C'>${options.C} </p>
       <p><input type='radio' name='question_${title}' value='D'>${options.D} </p>
+      <hr>
+      <button onclick='sendRes("${title}")' class='btRes'>responder</button>
     </div>
   </div>`
 }
 
+//sendRes function
+function sendRes(title){
+  console.log(title)
+  optMarked = $(`[name="question_${title}"]:checked`).val()
+  resSend = {'res':optMarked,'title':title}
+  socket.emit('validateResponseQuestion',resSend)
+}
+
+
+
+  socket.on('correctionResponse',(resServer)=>{
+    console.log('bem, eu toh sendo trabalhado')
+    console.log(resServer)
+    if(resServer){
+      alert('Parabens! Você acertou!')
+    }
+    else{
+      alert('Ops! Você errou!!')
+    }
+  })
+
+
 //function for work with the questions data
 //adding the questions in the div with id 'app'
-function dataWorkQuestions(question){
+function dataWorkQuestions(question,n){
     titleQuestion = question.title;
     bodyQuestion = question.body;
     imageUrlQuestion = question.imgUrl;
@@ -38,13 +62,34 @@ function dataWorkQuestions(question){
 
     console.log(question)
 
-    $('#app').append(createCardQuestion(titleQuestion,bodyQuestion,imageUrlQuestion,optionsQuestion))
+    $('#app').append(createCardQuestion(titleQuestion,bodyQuestion,imageUrlQuestion,optionsQuestion,n))
     width = width +230
 
 }
 
+
+// initializing the login user
+function screenLogin(){
+  $('#app').append(`<div class='center'><div class='login'>
+  <h2>crie seu nick</h2>
+  <hr>
+  <p>choice your avatar:</p>
+  <input type='file'>
+  </div></div>`)
+}
+
+function createCredentialNick(userName,urlAvatar,old){
+  console.log('test')
+}
+
+
+// starting the gamer
+screenLogin()
+
+
+
 //getting questions
-socket.emit('get_question')
+//socket.emit('get_question')
 
 socket.on('question',(questionsData)=>{
     console.log(questionsData)
@@ -53,7 +98,7 @@ socket.on('question',(questionsData)=>{
     //questions.forEach(dataWorkQuestions);
 
     for(var i in questions){
-        dataWorkQuestions(questions[i]);
+        dataWorkQuestions(questions[i],i);
         console.log(questions[i])
     }
 
