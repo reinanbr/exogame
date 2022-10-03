@@ -44,6 +44,9 @@ def index():
     return render_template('index.html',data={'test':'ok'})
 
 
+# @app.route('src/<path:path>')
+# def sendPath(path):
+#     return send_from_directory('static',path)
 
 @app.route('/add_questions')
 def quest():

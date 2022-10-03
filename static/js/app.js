@@ -73,10 +73,32 @@ function screenLogin(){
   $('#app').append(`<div class='center'><div class='login'>
   <h2>crie seu nick</h2>
   <hr>
-  <p>choice your avatar:</p>
-  <input type='file'>
+  <p>choice your avatar character:</p>
+  <span id='avatarChoicePainel'></span>
+  <hr>
+  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_1'><img class='avatar' src="/static/img/avatar/avatar_1.jpg">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_2'><img class='avatar' src="/static/img/avatar/avatar_2.jpg"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_3'><img class='avatar' src="/static/img/avatar/avatar_3.jpg"> </span>
+  <br>
+  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_4'><img class='avatar' src="/static/img/avatar/avatar_4.jpg">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_5'><img class='avatar' src="/static/img/avatar/avatar_5.jpg"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_6'><img class='avatar' src="/static/img/avatar/avatar_6.jpg"> </span>
+ <br>
+  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_7'><img class='avatar' src="/static/img/avatar/avatar_7.jpg">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_8'><img class='avatar' src="/static/img/avatar/avatar_8.jpg"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_9'><img class='avatar' src="/static/img/avatar/avatar_9.jpg"> </span>
+ <hr>
   </div></div>`)
 }
+
+function added(srcAvatar){
+  $("#avatarChoicePainel").html(`<img class='avatar' src='/static/img/avatar/${srcAvatar}.jpg'>`)
+
+
+}
+
+$(document.body).on('click',"#avatarInput",function (e) {
+  
+  console.log('fui clicado')
+  srcAvatar = $('[name="avatar"]:checked').val()
+  console.log(srcAvatar)
+  added(srcAvatar)
+})
+
 
 function createCredentialNick(userName,urlAvatar,old){
   console.log('test')
