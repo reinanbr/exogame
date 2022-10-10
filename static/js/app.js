@@ -7,6 +7,8 @@ email: slimchatuba@gmail.com
 */
 
 
+$(Window).ready(()=>{
+
 //initializing the server 
 var socket = io();
 
@@ -73,20 +75,69 @@ function screenLogin(){
   $('#app').append(`<div class='center'><div class='login'>
   <h2>crie seu nick</h2>
   <hr>
-  <p>choice your avatar character:</p>
+  <form>
+  <p>escolha o teu avatar *:</p>
   <span id='avatarChoicePainel'></span>
+  <b></b>
   <hr>
-  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_1'><img class='avatar' src="/static/img/avatar/avatar_1.jpg">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_2'><img class='avatar' src="/static/img/avatar/avatar_2.jpg"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_3'><img class='avatar' src="/static/img/avatar/avatar_3.jpg"> </span>
+  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_1'><img class='avatar' src="/static/img/avatar/avatar_1.png">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_2'><img class='avatar' src="/static/img/avatar/avatar_2.png"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_3'><img class='avatar' src="/static/img/avatar/avatar_3.png"> </span>
   <br>
-  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_4'><img class='avatar' src="/static/img/avatar/avatar_4.jpg">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_5'><img class='avatar' src="/static/img/avatar/avatar_5.jpg"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_6'><img class='avatar' src="/static/img/avatar/avatar_6.jpg"> </span>
+  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_4'><img class='avatar' src="/static/img/avatar/avatar_4.png">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_5'><img class='avatar' src="/static/img/avatar/avatar_5.png"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_6'><img class='avatar' src="/static/img/avatar/avatar_6.png"> </span>
  <br>
-  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_7'><img class='avatar' src="/static/img/avatar/avatar_7.jpg">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_8'><img class='avatar' src="/static/img/avatar/avatar_8.jpg"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_9'><img class='avatar' src="/static/img/avatar/avatar_9.jpg"> </span>
+  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_7'><img class='avatar' src="/static/img/avatar/avatar_7.png">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_8'><img class='avatar' src="/static/img/avatar/avatar_8.png"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_9'><img class='avatar' src="/static/img/avatar/avatar_9.png"> </span>
  <hr>
-  </div></div>`)
+ <br>
+ <span><p>insira o teu nick *:
+ <input class='loginInput' id='nameNick' type='text' ng-model='name' placeholder='insira o seu belo nome <3'></p></span>
+ <hr>
+ <p>email *:</p>
+ <input type='email' required id='emailUser' placeholder='insira o seu emaiuzinho, meu amr' class='loginInput'>
+ <hr>
+  <p>data de nascimento * </p>
+  <input type='date'  value="2002-07-22"
+  min="1950-01-01" max="2018-12-31">
+  <br>
+  <hr>
+  <p>bio (opcional)</p>
+  <input class='loginInput' id='bio' placeholder='fale sobre você...'>
+  <hr>
+  <br>
+  <p>* -> campo obrigatório </p>
+  <hr>
+  <button type='submit' id='createAvatarBt' class='btNick'>criar nick</button>
+  </form>
+  </div>
+  </div>`)
 }
 
+
+//Cancel to submit form!!!!
+$(document.body).on('submit',"form",function (event) {
+  
+  event.preventDefault();
+  console.log("aaya");
+  var keyPressed = event.keyCode || event.which;
+  if (keyPressed === 13) {
+      alert("You pressed the Enter key!!");
+  
+      return false;
+  }
+});
+
+
+
+$(document.body).on('click',"#createAvatarBt",function (e) {
+  
+  user = {}
+  user.name = $('#nameNick').val()
+  user.srcAvatar = $(`[name="avatar"]:checked`).val()
+  user.email = $('#emailUser').val()
+  user.bio = $('#bio').val()
+  console.log(user)
+})
+
 function added(srcAvatar){
-  $("#avatarChoicePainel").html(`<img class='avatar' src='/static/img/avatar/${srcAvatar}.jpg'>`)
+  $("#avatarChoicePainel").html(`<img class='avatar' src='/static/img/avatar/${srcAvatar}.png'>`)
 
 
 }
@@ -177,3 +228,18 @@ function play() {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})

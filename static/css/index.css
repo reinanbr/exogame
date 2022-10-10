@@ -225,3 +225,19 @@ p{
   width:50px;
   height: 50px;
 }
+
+
+.loginInput{
+  border-radius: 10px;
+  border: solid black 1px;
+  font-size: 99%;
+  text-align: center;
+}
+
+.btNick{
+  border-radius: 10px;
+  background-color: rgb(28, 28, 243);
+  color:white;
+  width: 20%;
+  height: 10%;
+}

@@ -2,7 +2,7 @@
 <!doctype html>
 
 
-<html lang="pt">
+<html lang='pt' ng-app="app" ng-controller="login">
     <head>
         {% block head %}
         <!-- Required meta tags -->
@@ -154,7 +154,9 @@
             {{ bootstrap.load_js() }}
             <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
             <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>  
+
             <script src="{{url_for('static',filename='js/app.js')}}"   <!-- <script type="text/javascript" charset="utf-8">
+              
             username=localStorage.getItem('username')
 
                 var socket = io();
