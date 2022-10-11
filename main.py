@@ -8,6 +8,7 @@ import datetime as dt
 import os
 import time
 from admFirebase import getQuestionsData as gqd,addUser, timeUser
+from get_ip import getIpInfo
 #from data import questions
 
 #getting the data now
@@ -71,10 +72,12 @@ def connect():
     date = now()
     dt_string = date.strftime("%d/%m/%Y %H:%M:%S")
     dt, hour = dt_string.split(' ')
+
     userJson = {"IP":ip,
                 "userAgent":userAgent,
                 "date":{"date":dt,"hour":hour},
                 "acessList":[]}
+
     addUser(userJson)
     global timeIp
     ip = request.remote_addr

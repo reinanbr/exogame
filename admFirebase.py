@@ -39,6 +39,7 @@ def addUser(userJson):
     userData = db.collection('users')
     userDataList = userData.stream()
     userExist = False
+
     for userInfo in userDataList:
         userInfo = userInfo.to_dict()
 
@@ -63,14 +64,13 @@ def timeUser(timeIp):
 
     for userInfo in usersDataList:
         userInfo = userInfo.to_dict()
-        print(userInfo)
+
         if userInfo['IP']==ip:
-            print('achei')
-            print(userInfo['date'])
             userInfo['date']['timeConnection'] = timeConnection
             userInfo['acessList'][-1]=userInfo['date']
-            print(userInfo)
+
             usersData.document(userInfo['IP']).set(userInfo)
+
 
 
 def getQuestionsData():

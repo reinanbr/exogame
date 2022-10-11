@@ -58,7 +58,7 @@
     <body>
         <!-- Your page content -->
         {% block content %}
-        <nav class="navbar navbar-expand-lg navbar-light text-light">
+        <nav  expand="large" class="navbar navbar-expand-lg navbar-light justify-content-end text-light">
             <div class="container-fluid">
                 <h2><a class="navbar-brand text-light" href="#" id='home'><img class="logo" src='{{url_for("static",filename="img/android_ico.png")}}' size="10px"></a><span class='title'></span></h2>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,15 @@
       
                       </ul>
                     </div>
-            
+                  </mdb-navbar-nav>
+                  <mdb-navbar-nav class="justify-content-end" right>
+                    <mdb-nav-item>
+                      
+                      <mdb-icon icon="envelope" />
+                    </mdb-nav-item>
+                    <mdb-dropdown tag="li" class="nav-item  me-auto avatar" anchorClass="p-0">
+                      <mdb-dropdown-toggle tag="a" navLink color="stylish" slot="toggle" waves-fixed>
+                        <div id='avatarGamePainel'></div>
         </nav>
         {% endblock %}
 

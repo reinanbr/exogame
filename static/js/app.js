@@ -11,66 +11,22 @@ $(Window).ready(()=>{
 
 //initializing the server 
 var socket = io();
-
-width = 10
-
-//function for create the card question
-function createCardQuestion(title,body,imageUrl,options,i){
-    return ` <div class="card" id='${title}' style="margin-left:${width}px;margin-top:0px;margin-bottom:0px;margin-right:0px;">
-    <img class="card-img-top" src=${imageUrl} alt="Card image">
-    <div class="card-body">
-      <h4 class="card-title">${title}</h4>
-      <p class="card-text"><b>${body}</b></p>
-      <hr>
-      <p><input type='radio' name='question_${title}' value='A'>${options.A} </p>
-      <p><input type='radio' name='question_${title}' value='B'>${options.B} </p>
-      <p><input type='radio' name='question_${title}' value='C'>${options.C} </p>
-      <p><input type='radio' name='question_${title}' value='D'>${options.D} </p>
-      <hr>
-      <button onclick='sendRes("${title}")' class='btRes'>responder</button>
-    </div>
-  </div>`
-}
-
-//sendRes function
-function sendRes(title){
-  console.log(title)
-  optMarked = $(`[name="question_${title}"]:checked`).val()
-  resSend = {'res':optMarked,'title':title}
-  socket.emit('validateResponseQuestion',resSend)
-}
+var width = 10
 
 
 
-  socket.on('correctionResponse',(resServer)=>{
-    console.log('bem, eu toh sendo trabalhado')
-    console.log(resServer)
-    if(resServer){
-      alert('Parabens! Você acertou!')
-    }
-    else{
-      alert('Ops! Você errou!!')
-    }
-  })
+////////////////////////////////////* AVATAR CREATE */////////////////////////////////////////
 
 
-//function for work with the questions data
-//adding the questions in the div with id 'app'
-function dataWorkQuestions(question,n){
-    titleQuestion = question.title;
-    bodyQuestion = question.body;
-    imageUrlQuestion = question.imgUrl;
-    optionsQuestion = question.options
-
-    console.log(question)
-
-    $('#app').append(createCardQuestion(titleQuestion,bodyQuestion,imageUrlQuestion,optionsQuestion,n))
-    width = width +230
-
-}
-
+var htmlOld;
+var user = {}
+var seg = 0;
 
 // initializing the login user
+function added(srcAvatar){
+  $("#avatarChoicePainel").html(`<img class='avatar' src='/static/img/avatar/${srcAvatar}.png'>`)
+}
+
 function screenLogin(){
   $('#app').append(`<div class='center'><div class='login'>
   <h2>crie seu nick</h2>
@@ -109,8 +65,6 @@ function screenLogin(){
   </div>
   </div>`)
 }
-var htmlOld;
-
 //restart login
 $(document.body).on('click','#restartLogin',(e)=>{
   $('#app').html(htmlOld)
@@ -118,8 +72,6 @@ $(document.body).on('click','#restartLogin',(e)=>{
 
 //Cancel to submit form!!!!
 $(document.body).on('submit',"form",function (event) {
-  
-  user = {}
   user.name = $('#nameNick').val()
   user.srcAvatar = $(`[name="avatar"]:checked`).val()
   user.email = $('#emailUser').val()
@@ -159,16 +111,39 @@ ${bioHtml}
 });
 
 
-
+$(document.body).on('click',"#startGame",function (event) {
+  $("#app").html(`<div class='center'><div class='login'>
+  <p style='text-align:left'>Se liga, <b>${user.name}</b>, você terá que responder exatamente <b>${questions.length} questões</b> sobre exoplanetas em um determinado tempo.<br>
+  Vocẽ terá acesso a dicas que estarão disponível no cabeçalho da questão. <br> Você só poderá errar no <b>máximo 3 vezes</b>, caso contrário você irá perder.<br>
+  No final será ti enviada uma imagem no email e estará disponível para download sobre as informaçoẽs do jogo que você fez.<br>
+  <hr><i>Boa sorte - ReinanBr</i></p> <br> <button id='iniciarGame' class='btNick'>iniciar</button>
+  </div></div>`)
+})
 
 // $(document.body).on('click',"#createAvatarBt",function (e) {
   
 // })
 
-function added(srcAvatar){
-  $("#avatarChoicePainel").html(`<img class='avatar' src='/static/img/avatar/${srcAvatar}.png'>`)
 
+$(document.body).on('click',"#iniciarGame",function (e) {
+  console.log('oh, toh fufando aqui')
+$('#avatarGamePainel').html(`<img
+  src='/static/img/avatar/${user.srcAvatar}.png'
+  class="rounded-circle z-depth-0"
+  alt="avatar image"
+  height="35"
+/><br><span>${user.name}</span>
+<span id='timeGame'></span>`)
+currentTime()
+$('#app').html('')
+workQuestions()
+})
 
+function currentTime(){
+  setInterval(() => {
+    seg = seg + 1
+    $("#timeGame").text(seg)
+  }, 1000);
 }
 
 $(document.body).on('click',"#avatarInput",function (e) {
@@ -190,24 +165,100 @@ screenLogin()
 
 
 
-//getting questions
-//socket.emit('get_question')
+//////////////////////////////////* WORKING WITH QUESTIONS */////////////////////////////////////////////
 
+
+////////* ADDING ON THE SCREEN *////////
+
+var questions;
+
+//getting questions
+socket.emit('get_question')
 socket.on('question',(questionsData)=>{
     console.log(questionsData)
-    var questions = questionsData;
+    questions = questionsData;
     console.log(questions)
     //questions.forEach(dataWorkQuestions);
-
-    for(var i in questions){
-        dataWorkQuestions(questions[i],i);
-        console.log(questions[i])
-    }
-
-    
-    console.log(questions);
-
 });
+
+function workQuestions(){
+
+  for(var i in questions){
+    dataWorkQuestions(questions[i],i);
+    console.log(questions[i])
+}
+console.log(questions);
+}
+
+//function for work with the questions data
+//adding the questions in the div with id 'app'
+function dataWorkQuestions(question,n){
+  titleQuestion = question.title;
+  bodyQuestion = question.body;
+  imageUrlQuestion = question.imgUrl;
+  optionsQuestion = question.options
+
+  console.log(question)
+
+  $('#app').append(createCardQuestion(titleQuestion,bodyQuestion,imageUrlQuestion,optionsQuestion,n))
+  width = width +230
+
+}
+
+
+//function for create the card question
+function createCardQuestion(title,body,imageUrl,options,i){
+    return ` <div class="card" id='${title}' style="margin-left:${width}px;margin-top:0px;margin-bottom:0px;margin-right:0px;">
+    <img class="card-img-top" src=${imageUrl} alt="Card image">
+    <div class="card-body">
+      <h4 class="card-title">${title}</h4>
+      <p class="card-text"><b>${body}</b></p>
+      <hr>
+      <p><input type='radio' name='question_${title}' value='A'>${options.A} </p>
+      <p><input type='radio' name='question_${title}' value='B'>${options.B} </p>
+      <p><input type='radio' name='question_${title}' value='C'>${options.C} </p>
+      <p><input type='radio' name='question_${title}' value='D'>${options.D} </p>
+      <hr>
+      <button onclick='sendRes("${title}")' class='btRes'>responder</button>
+    </div>
+  </div>`
+}
+
+
+
+////////* RESOLUTION OF QUESTIONS *////////
+
+//sendRes function
+function sendRes(title){
+  console.log(title)
+  optMarked = $(`[name="question_${title}"]:checked`).val()
+  resSend = {'res':optMarked,'title':title}
+  socket.emit('validateResponseQuestion',resSend)
+}
+
+socket.on('correctionResponse',(resServer)=>{
+    console.log('bem, eu toh sendo trabalhado')
+    console.log(resServer)
+    if(resServer){
+      alert('Parabens! Você acertou!')
+    }
+    else{
+      alert('Ops! Você errou!!')
+    }
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //verify if it are connected
 socket.on('connect', function() {
