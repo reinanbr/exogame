@@ -241,3 +241,12 @@ p{
   width: 20%;
   height: 10%;
 }
+
+
+.backLogin{
+  border-radius: 10px;
+  background-color:white;
+  color: rgb(28, 28, 243);
+  width: 20%;
+  height: 10%;
+}

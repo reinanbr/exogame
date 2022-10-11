@@ -80,7 +80,7 @@ function screenLogin(){
   <span id='avatarChoicePainel'></span>
   <b></b>
   <hr>
-  <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_1'><img class='avatar' src="/static/img/avatar/avatar_1.png">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_2'><img class='avatar' src="/static/img/avatar/avatar_2.png"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_3'><img class='avatar' src="/static/img/avatar/avatar_3.png"> </span>
+  <span> <input type='radio' required id='avatarInput' name='avatar' value='avatar_1'><img class='avatar' src="/static/img/avatar/avatar_1.png">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_2'><img class='avatar' src="/static/img/avatar/avatar_2.png"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_3'><img class='avatar' src="/static/img/avatar/avatar_3.png"> </span>
   <br>
   <span> <input type='radio' id='avatarInput' name='avatar' value='avatar_4'><img class='avatar' src="/static/img/avatar/avatar_4.png">  <input  id='avatarInput' type='radio' name='avatar' value='avatar_5'><img class='avatar' src="/static/img/avatar/avatar_5.png"> <input  id='avatarInput' type='radio' name='avatar' value='avatar_6'><img class='avatar' src="/static/img/avatar/avatar_6.png"> </span>
  <br>
@@ -88,13 +88,13 @@ function screenLogin(){
  <hr>
  <br>
  <span><p>insira o teu nick *:
- <input class='loginInput' id='nameNick' type='text' ng-model='name' placeholder='insira o seu belo nome <3'></p></span>
+ <input class='loginInput' required id='nameNick' type='text' ng-model='name' placeholder='insira o seu belo nome <3'></p></span>
  <hr>
  <p>email *:</p>
  <input type='email' required id='emailUser' placeholder='insira o seu emaiuzinho, meu amr' class='loginInput'>
  <hr>
   <p>data de nascimento * </p>
-  <input type='date'  value="2002-07-22"
+  <input type='date' id='old' required  value="2002-07-22"
   min="1950-01-01" max="2018-12-31">
   <br>
   <hr>
@@ -109,13 +109,47 @@ function screenLogin(){
   </div>
   </div>`)
 }
+var htmlOld;
 
+//restart login
+$(document.body).on('click','#restartLogin',(e)=>{
+  $('#app').html(htmlOld)
+})
 
 //Cancel to submit form!!!!
 $(document.body).on('submit',"form",function (event) {
   
+  user = {}
+  user.name = $('#nameNick').val()
+  user.srcAvatar = $(`[name="avatar"]:checked`).val()
+  user.email = $('#emailUser').val()
+  user.bio = $('#bio').val()
+  user.old = $('#old').val()
+  htmlOld = $('#app').html()
+  console.log(user)
+  console.log(htmlOld)
+  bioHtml = ''
+  if(user.bio){
+    bioHtml = `<p><b>Bio</b>: ${user.bio} </p>`
+  }
+
+  $('#app').html(`<div class='center'><div class='login'>
+  <h3>Avatar Nick</h3>
+<hr>
+<img class='avatar' src='/static/img/avatar/${user.srcAvatar}.png'>
+<br>
+<div style='text-align:left'>
+<p><b>Nome</b>: ${user.name} </p>
+<p><b>Data de Nascimento</b>: ${user.old} </p>
+<p><b>Email</b>: ${user.email} </p>
+
+${bioHtml}
+<hr>
+<br>
+<span><button  class='backLogin' id='restartLogin'>voltar para a criação do perfil</button> <button id='startGame' class='btNick'>iniciar o jogo</button></span>
+</div>
+  </div></div>`)
   event.preventDefault();
-  console.log("aaya");
   var keyPressed = event.keyCode || event.which;
   if (keyPressed === 13) {
       alert("You pressed the Enter key!!");
@@ -126,15 +160,10 @@ $(document.body).on('submit',"form",function (event) {
 
 
 
-$(document.body).on('click',"#createAvatarBt",function (e) {
+
+// $(document.body).on('click',"#createAvatarBt",function (e) {
   
-  user = {}
-  user.name = $('#nameNick').val()
-  user.srcAvatar = $(`[name="avatar"]:checked`).val()
-  user.email = $('#emailUser').val()
-  user.bio = $('#bio').val()
-  console.log(user)
-})
+// })
 
 function added(srcAvatar){
   $("#avatarChoicePainel").html(`<img class='avatar' src='/static/img/avatar/${srcAvatar}.png'>`)
@@ -180,16 +209,24 @@ socket.on('question',(questionsData)=>{
 
 });
 
-// //verify if it are connected
-// socket.on('connect', function() {
-//     socket.emit('connected', {'username':username,'text': 'I\'m connected!'});
-// $('#server_status').html(`<i title='Server Online' class="material-icons green">brightness_1</i>`)
-// });
+//verify if it are connected
+socket.on('connect', function() {
+    //socket.emit('connected', {'username':username,'text': 'I\'m connected!'});
+    $('#socketStatus').html(`<p  class="footer_text" title='Server Online' >Online 🟢</p>`)
+});
 
-// //verify if the server was disconnected
-// socket.on('disconnect',()=>{
-//     $('#server_status').html(`<i title='Server Offline' class="material-icons red">brightness_1</i>`)
-// });
+
+socket.on('usersCount',(n)=>{
+  console.log(n)
+  nConnect = n>1 ? `${n} conectados` : `${n} conectado`
+  $('#socketStatus').html(`<p  class="footer_text" title='Server Online' >Online 🟢 (${nConnect})</p>`)
+
+})
+
+//verify if the server was disconnected
+socket.on('disconnect',()=>{
+    $('#socketStatus').html(`<p  class="footer_text" title='Server Offline'>Offline🔴</p>`)
+});
 
 // //verify if it was closed
 // window.onbeforeunload = function () {
@@ -236,8 +273,36 @@ function play() {
 
 
 
+var globalVar = {};
+
+fetch('http://www.geoplugin.net/json.gp').then((dataIp)=>{
+  return dataIp.json()
+})
+.then((res) => {
+  data_ip = res
+  userIpInfo = {}
+  userIpInfo.city = res.geoplugin_city
+  userIpInfo.state = res.geoplugin_regionCode
+  userIpInfo.location = [res.geoplugin_latitude,res.geoplugin_longitude]
+  userIpInfo.ping = res.geoplugin_delay
+  userIpInfo.ip = res.geoplugin_request
+
+ // socket.emit('userIpInfo',userIpInfo)
+  globalVar.userIpInfo = userIpInfo
 
 
+  console.log(data_ip)
+})
+
+//console.log(userIpInfo)
+var user_;
+socket.on('userInfo',(user)=>{
+  user_ = user
+})
+
+window.onbeforeunload = function () {
+  socket.emit('disconnected', user_);
+}
 
 
 

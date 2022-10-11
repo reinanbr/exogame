@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request, redirect,url_for,flash, send_from_directory
+from flask import Flask, render_template,request,session, redirect,url_for,flash, send_from_directory
 from flask import jsonify
 from flask_socketio import SocketIO,emit,send
 from json import dump
@@ -6,7 +6,8 @@ from flask_bootstrap import Bootstrap5
 from urllib.parse import quote
 import datetime as dt
 import os
-from admFirebase import getQuestionsData as gqd,addUser
+import time
+from admFirebase import getQuestionsData as gqd,addUser, timeUser
 #from data import questions
 
 #getting the data now
@@ -19,7 +20,7 @@ app = Flask(__name__,static_url_path='/static')
 '''the bootstrap init'''
 bootstrap = Bootstrap5(app)
 
-
+socketio = SocketIO(app)
 
 
 '''init page'''
@@ -31,16 +32,7 @@ def favicon():
 
 @app.route('/')
 def index():
-    userAgent = request.headers.get('User_Agent')
-    ip = request.remote_addr
-    date = now()
-    dt_string = date.strftime("%d/%m/%Y %H:%M:%S")
-    dt, hour = dt_string.split(' ')
-    userJson = {"IP":ip,
-                "userAgent":userAgent,
-                "date":{"date":dt,"hour":hour},
-                "acessList":[]}
-    addUser(userJson)
+    #emit('userInfo',userJson)
     return render_template('index.html',data={'test':'ok'})
 
 
@@ -58,7 +50,7 @@ def quest():
 
 
 '''the scoketio init'''
-socketio = SocketIO(app)
+
 
 #sending the question
 @socketio.on('get_question')
@@ -69,10 +61,27 @@ def get_question()-> None:
 
     emit('question',questions,json=True)
 
+global users
+users = {}
 # connected
-@socketio.on('connected')
-def connect(data):
-    print(data)
+@socketio.on('connect')
+def connect():
+    userAgent = request.headers.get('User_Agent')
+    ip = request.remote_addr
+    date = now()
+    dt_string = date.strftime("%d/%m/%Y %H:%M:%S")
+    dt, hour = dt_string.split(' ')
+    userJson = {"IP":ip,
+                "userAgent":userAgent,
+                "date":{"date":dt,"hour":hour},
+                "acessList":[]}
+    addUser(userJson)
+    global timeIp
+    ip = request.remote_addr
+    timeIp = {'ip':ip,'timeConnection':time.time()}
+    users[ip]=timeIp
+    emit('usersCount',len(users),broadcast=True)
+    print(users)
 
 
 def call(res):
@@ -80,9 +89,21 @@ def call(res):
 
 #disconnected
 @socketio.on('disconnect')
-def disconnected(data_):
-    print(data_) 
-    
+def disconnected():
+    # print("Request:")
+    # vars(request)
+    # dir(request)
+    # print("Session:")
+    # vars(session)
+    # dir(session)
+    ip = request.remote_addr
+    timeIp = users[ip]
+    timeConnection = time.time() - timeIp['timeConnection']
+    timeIp['timeConnection'] = timeConnection
+    timeUser(timeIp)
+    print(f'o cara do ip {timeIp["ip"]} saiu, o cara ficou apenas {timeConnection:.2f}seg aqui') 
+    del users[ip]
+    emit('usersCount',len(users),broadcast=True)
     
 
 #correction from question

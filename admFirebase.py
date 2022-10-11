@@ -34,22 +34,43 @@ def addQuestions(jsonQuestion):
         return False
 
 
-
+#Users
 def addUser(userJson):
     userData = db.collection('users')
     userDataList = userData.stream()
     userExist = False
     for userInfo in userDataList:
         userInfo = userInfo.to_dict()
+
         if userJson['IP'] == userInfo['IP']:
             userExist = userInfo
-    if userExist:
+
+    if 'acessList' in userExist:
         userExist['acessList'].append(userJson['date'])
         userExist['date']=userJson['date']
         userData.document(userExist['IP']).set(userExist)
+
     else:
         userData.document(userJson['IP']).set(userJson)
 
+
+
+#adding time connection
+def timeUser(timeIp):
+    ip,timeConnection = timeIp['ip'],timeIp['timeConnection']
+    usersData = db.collection('users')
+    usersDataList = usersData.stream()
+
+    for userInfo in usersDataList:
+        userInfo = userInfo.to_dict()
+        print(userInfo)
+        if userInfo['IP']==ip:
+            print('achei')
+            print(userInfo['date'])
+            userInfo['date']['timeConnection'] = timeConnection
+            userInfo['acessList'][-1]=userInfo['date']
+            print(userInfo)
+            usersData.document(userInfo['IP']).set(userInfo)
 
 
 def getQuestionsData():
