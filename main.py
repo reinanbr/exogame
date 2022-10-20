@@ -1,4 +1,7 @@
+
 from flask import Flask, render_template,request,session, redirect,url_for,flash, send_from_directory
+from flask_mobility import Mobility
+from flask_mobility import mobile_template
 from flask import jsonify
 from flask_socketio import SocketIO,emit,send
 from json import dump
@@ -20,6 +23,7 @@ now = dt.datetime.now
 app = Flask(__name__,static_url_path='/static')
 '''the bootstrap init'''
 bootstrap = Bootstrap5(app)
+Mobility(app)
 
 socketio = SocketIO(app)
 
@@ -32,9 +36,14 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/')
-def index():
+@mobile_template('{templates/}/mobileUser.html')
+def index(template):
     #emit('userInfo',userJson)
-    return render_template('index.html',data={'test':'ok'})
+    
+    #verification if it is a mobile device
+    userAgent = request.headers.get('User_Agent').lower()
+    devicesMobile = ['Android','Ios']
+    return render_template(template)
 
 
 # @app.route('src/<path:path>')

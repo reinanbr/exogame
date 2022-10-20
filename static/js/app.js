@@ -7,12 +7,31 @@ email: slimchatuba@gmail.com
 */
 
 
+
+
+////////////////////////////////* essa parte vai em pt-br msm, fodas *///////////////////////////////////
 $(Window).ready(()=>{
 
 //initializing the server 
 var socket = io();
 var width = 10
 
+//////////////////////////////////////* LOADING PANEL */////////////////////////////////////////
+
+function initPainel(){
+  $('#app').html(`<div class='center'> <div class='login'>
+  <br>
+  <hr>
+  <img class='logoInit rounded' src='/static/img/apple_ico.png'>
+  <hr>
+  <img class='loading circle' src='/static/img/loading.gif'>
+  </div</div>`)
+  setTimeout(() => {
+    $('#app').fadeOut()
+    screenLogin()
+    $('#app').fadeIn()
+  }, 6000);
+}
 
 
 ////////////////////////////////////* AVATAR CREATE */////////////////////////////////////////
@@ -28,7 +47,7 @@ function added(srcAvatar){
 }
 
 function screenLogin(){
-  $('#app').append(`<div class='center'><div class='login'>
+  $('#app').html(`<div class='center'><div class='login'>
   <h2>crie seu nick</h2>
   <hr>
   <form>
@@ -61,6 +80,8 @@ function screenLogin(){
   <p>* -> campo obrigatório </p>
   <hr>
   <button type='submit' id='createAvatarBt' class='btNick'>criar nick</button>
+  <br>
+  <hr>
   </form>
   </div>
   </div>`)
@@ -158,10 +179,6 @@ $(document.body).on('click',"#avatarInput",function (e) {
 function createCredentialNick(userName,urlAvatar,old){
   console.log('test')
 }
-
-
-// starting the gamer
-screenLogin()
 
 
 
@@ -357,5 +374,17 @@ window.onbeforeunload = function () {
 
 
 
+
+
+
+
+/* //////////////////////////////////////////////////// */
+
+////////////////////* WORKING SITE *//////////////////
+
+
+
+// starting the gamer
+initPainel()
 
 })

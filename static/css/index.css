@@ -97,7 +97,7 @@ body{
       flex-wrap: nowrap; */
       /* display: flex; */
       flex-wrap: nowrap;
-      overflow-x: scroll;
+      /* overflow-x: scroll; */
     }
     
 
@@ -209,6 +209,7 @@ p{
 }
 
 .login{
+  border-radius: 10px;
   background-color: aliceblue;
   width: 50%;
   height:50%;
@@ -249,4 +250,9 @@ p{
   color: rgb(28, 28, 243);
   width: 20%;
   height: 10%;
+}
+
+.loading{
+  padding:0.1%;
+  width: 40%;
 }
