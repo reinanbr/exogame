@@ -17,7 +17,6 @@ flask-admin = "*"
 flask-login = "*"
 pytest-flask = "*"
 firebase-admin = "*"
-flask-mobility = "*"
 
 [dev-packages]
 
