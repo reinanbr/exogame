@@ -7,11 +7,37 @@ email: slimchatuba@gmail.com
 */
 
 
+////////////////////////////////* essa parte vai em pt-br msm, fodas *///////////////////////////////////
 $(Window).ready(()=>{
 
 //initializing the server 
 var socket = io();
 var width = 10
+
+
+
+
+
+
+////////////////////////////////////* LOADING PANEL */////////////////////////////////////////
+
+function initPainel(){
+  $('#app').html(`<div class='center'> <div class='login'>
+  <br>
+  <hr>
+  <img class='logoInit rounded' src='/static/img/apple_ico.png'>
+  <hr>
+  <img class='loading circle' src='/static/img/loading.gif'>
+  </div</div>`)
+  setTimeout(() => {
+    $('#app').fadeOut()
+    screenLogin()
+    $('#app').fadeIn()
+  }, 6000);
+}
+
+
+
 
 
 
@@ -28,7 +54,7 @@ function added(srcAvatar){
 }
 
 function screenLogin(){
-  $('#app').append(`<div class='center'><div class='login'>
+  $('#app').html(`<div class='center'><div class='login'>
   <h2>crie seu nick</h2>
   <hr>
   <form>
@@ -62,6 +88,10 @@ function screenLogin(){
   <hr>
   <button type='submit' id='createAvatarBt' class='btNick'>criar nick</button>
   </form>
+
+  <br>
+  <hr>
+
   </div>
   </div>`)
 }
@@ -358,4 +388,16 @@ window.onbeforeunload = function () {
 
 
 
+
+
+
+
+/* //////////////////////////////////////////////////// */
+
+////////////////////* WORKING SITE *//////////////////
+
+
+
+// starting the gamer
+initPainel()
 })
