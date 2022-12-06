@@ -13,6 +13,7 @@ $(Window).ready(()=>{
 //initializing the server 
 var socket = io();
 var width = 10
+var user = {}
 
 
 
@@ -45,7 +46,6 @@ function initPainel(){
 
 
 var htmlOld;
-var user = {}
 var seg = 0;
 
 // initializing the login user
@@ -140,6 +140,9 @@ ${bioHtml}
   }
 });
 
+//responder
+
+
 
 $(document.body).on('click',"#startGame",function (event) {
   $("#app").html(`<div class='center'><div class='login'>
@@ -162,7 +165,7 @@ $('#avatarGamePainel').html(`<img
   class="rounded-circle z-depth-0"
   alt="avatar image"
   height="35"
-/><br><span>${user.name}</span>
+/><br><span>${user.name}<br><span>tempo: </span></span>
 <span id='timeGame'></span>`)
 currentTime()
 $('#app').html('')

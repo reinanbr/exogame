@@ -7,7 +7,7 @@ import time
 import json
 
 
-cred = credentials.Certificate("exodatat-firebase-adminsdk-ac4zq-6f38939310.json")
+cred = credentials.Certificate("exodatat.json")
 app = firebase_admin.initialize_app(cred)
 
 
