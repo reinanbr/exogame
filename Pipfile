@@ -17,6 +17,7 @@ flask-admin = "*"
 flask-login = "*"
 pytest-flask = "*"
 firebase-admin = "*"
+google-cloud-firestore = "*"
 
 [dev-packages]
 

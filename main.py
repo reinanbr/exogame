@@ -84,7 +84,7 @@ def connect():
                 "date":{"date":dt,"hour":hour},
                 "acessList":[]}
 
-    addUser(userJson)
+   # addUser(userJson)
     global timeIp
     ip = request.remote_addr
     timeIp = {'ip':ip,'timeConnection':time.time()}
@@ -109,7 +109,7 @@ def disconnected():
     timeIp = users[ip]
     timeConnection = time.time() - timeIp['timeConnection']
     timeIp['timeConnection'] = timeConnection
-    timeUser(timeIp)
+    #timeUser(timeIp)
     print(f'o cara do ip {timeIp["ip"]} saiu, o cara ficou apenas {timeConnection:.2f}seg aqui') 
     del users[ip]
     emit('usersCount',len(users),broadcast=True)
@@ -122,7 +122,7 @@ def resGet(resUser,callback=call):
     for question in questions:
         print('question:',question)
         if question['title'] == resUser['title']:
-            isCorrect = (question['Res']==resUser['res'])
+            isCorrect = (question['res']==resUser['res'])
             emit('correctionResponse',isCorrect)
 
 

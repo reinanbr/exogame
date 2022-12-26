@@ -13,7 +13,7 @@ $(Window).ready(()=>{
 //initializing the server 
 var socket = io();
 var width = 10
-var user = {}
+var user = {life:3,totalPontus:0}
 
 
 
@@ -102,12 +102,16 @@ $(document.body).on('click','#restartLogin',(e)=>{
 
 //Cancel to submit form!!!!
 $(document.body).on('submit',"form",function (event) {
+  user.media = 0
   user.name = $('#nameNick').val()
   user.srcAvatar = $(`[name="avatar"]:checked`).val()
   user.email = $('#emailUser').val()
   user.bio = $('#bio').val()
   user.old = $('#old').val()
   htmlOld = $('#app').html()
+
+  let dt = Date.now()
+  user.timeInit = dt.valueOf()
   console.log(user)
   console.log(htmlOld)
   bioHtml = ''
@@ -165,8 +169,7 @@ $('#avatarGamePainel').html(`<img
   class="rounded-circle z-depth-0"
   alt="avatar image"
   height="35"
-/><br><span>${user.name}<br><span>tempo: </span></span>
-<span id='timeGame'></span>`)
+/><br><span>${user.name}<span id='timeGame'></span>`)
 currentTime()
 $('#app').html('')
 workQuestions()
@@ -175,7 +178,10 @@ workQuestions()
 function currentTime(){
   setInterval(() => {
     seg = seg + 1
-    $("#timeGame").text(seg)
+    let s = seg%60
+    let min = Math.round(seg/60)
+    blockQuestion()
+    $("#timeGame").html(`<span> Média: ${user.media}</span><br><span>tempo: ${min}:${s}</span><br><span>Level: ${1+user.questionNumber}</span>`)
   }, 1000);
 }
 
@@ -234,14 +240,46 @@ function dataWorkQuestions(question,n){
   console.log(question)
 
   $('#app').append(createCardQuestion(titleQuestion,bodyQuestion,imageUrlQuestion,optionsQuestion,n))
-  width = width +230
+  width = width +330
 
 }
+function blockQuestion(){
+  for(let i in questions){
+    if(i>(user.questionNumber)){
+      //passed
+      $(`#${questions[i].title}`).html(`<h2>${Math.round(i+1)}</h2><hr><img class="card-img-top" src="static/img/blocked.png">`)
+    }
+    if(i<=user.questionNumber){
+      $(`#${questions[i].title}`).html(`<h2>${Math.round(i+1)}</h2><hr><img class="card-img-top" src="static/img/passed.jpg">`)
 
+    }
+    if(user.questionNumber==i){
+      console.log(questions)
+      $(`#${questions[i].title}`).html(`<h2>${Math.round(1+i)}</h2><hr><img class="card-img-top" src=${questions[i].imgUrl} alt="Card image">
+      <div class="card-body">
+        <h4 class="card-title">${questions[i].title}</h4>
+        <p class="card-text"><b>${questions[i].body}</b></p>
+        <hr>
+        <p><input type='radio' name='question_${questions[i].title}' value='A'>${questions[i].options.A} </p>
+        <p><input type='radio' name='question_${questions[i].title}' value='B'>${questions[i].options.B} </p>
+        <p><input type='radio' name='question_${questions[i].title}' value='C'>${questions[i].options.C} </p>
+        <p><input type='radio' name='question_${questions[i].title}' value='D'>${questions[i].options.D} </p>
+        <hr>
+      <button id='sendBt' value ="${questions[i].title}"  class='btRes'>responder</button>
+      </div>`)
+    }
+  }
+}
 
+user.questionNumber = 0
 //function for create the card question
+var countQuestion = 0
 function createCardQuestion(title,body,imageUrl,options,i){
-    return ` <div class="card" id='${title}' style="margin-left:${width}px;margin-top:0px;margin-bottom:0px;margin-right:0px;">
+
+    let dt = Date.now()
+    user.timeQuestionInit = dt.valueOf()
+    countQuestion = countQuestion + 1
+    return ` <div class="card" id='${title}' style="left:${width}px;top:0px; margin-top:0px;margin-bottom:0px;margin-right:0px;">
     <img class="card-img-top" src=${imageUrl} alt="Card image">
     <div class="card-body">
       <h4 class="card-title">${title}</h4>
@@ -252,33 +290,48 @@ function createCardQuestion(title,body,imageUrl,options,i){
       <p><input type='radio' name='question_${title}' value='C'>${options.C} </p>
       <p><input type='radio' name='question_${title}' value='D'>${options.D} </p>
       <hr>
-      <button onclick='sendRes("${title}")' class='btRes'>responder</button>
+    <button id='sendBt' value ="${title}"  class='btRes'>responder</button>
     </div>
   </div>`
 }
 
-
+// onclick='sendRes("${title}")'
 
 ////////* RESOLUTION OF QUESTIONS *////////
 
 //sendRes function
-function sendRes(title){
+$(document.body).on('click','#sendBt',function (){
+  let title = $('#sendBt').val()
   console.log(title)
-  optMarked = $(`[name="question_${title}"]:checked`).val()
-  resSend = {'res':optMarked,'title':title}
-  socket.emit('validateResponseQuestion',resSend)
-}
+  if(confirm('Tem certeza que deseja enviar sua resposta?')){
+    optMarked = $(`[name="question_${title}"]:checked`).val()
+    resSend = {'res':optMarked,'title':title}
+    socket.emit('validateResponseQuestion',resSend)
+    blockQuestion()
+  }
+})
 
 socket.on('correctionResponse',(resServer)=>{
     console.log('bem, eu toh sendo trabalhado')
     console.log(resServer)
     if(resServer){
-      alert('Parabens! Você acertou!')
+
+      user.questionNumber += 1
+      let dt = Date.now()
+      
+      let pontus = Math.round(1000*(1200/(dt.valueOf() - user.timeQuestionInit)))
+      alert(`Parabens! Você acertou!`)
+      alert(`Sua pontuação em [${user.questionNumber}/${questions.length}] foi de ${pontus}`)
+      user.totalPontus += pontus
+      user.media = Math.round(user.totalPontus/user.questionNumber) 
+
+      user.timeQuestionInit = dt.valueOf()
     }
     else{
       alert('Ops! Você errou!!')
     }
   })
+  
 
 
 
@@ -403,4 +456,5 @@ window.onbeforeunload = function () {
 
 // starting the gamer
 initPainel()
+blockQuestion()
 })

@@ -193,8 +193,8 @@ p{
 }
 
 .card{
-  width:25%;
-  height:15%;
+  width:20%;
+  height:10%;
   margin-top:0px;
   margin-bottom:0px;
   margin-right:0px;
@@ -205,7 +205,7 @@ p{
 }
 
 .card-img-top{
-  width: 35%;
+  width: 30%;
 }
 
 .login{
